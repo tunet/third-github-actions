@@ -1,0 +1,26 @@
+name: Deploy Workflow
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: action/checout@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Run linter
+        run: npm run lint
+      - name: Run tests
+        run: npm run test
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Get code
+        uses: action/checout@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Build project
+        run: npm run build
+      - name: Deploy project
+        run: echo "Deploy..."
